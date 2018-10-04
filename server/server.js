@@ -4,10 +4,15 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const path = require('path');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(require('./routes/usuario'));
+
+//Configuracion de las rutas globales
+app.use(require('./routes/index.js'));
+app.use(express.static(path.resolve(__dirname, '../public')));
+
 
 mongoose.connect(process.env.URLDB, (err, res) => {
     if (err) throw err;
