@@ -53,7 +53,6 @@ async function verify(token) {
         //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
     });
     const payload = ticket.getPayload();
-
     return {
         nombre: payload.name,
         email: payload.email,
@@ -67,23 +66,23 @@ async function verify(token) {
 app.post('/google', async(req, res) => {
 
     let token = req.body.idtoken;
-
     let googleUser = await verify(token)
         .catch(e => {
-            return res.status(403).json({
+            res.status(403).json({
                 ok: false,
-                err: e
+                err: {
+                    message: e.toString()
+                }
             });
         });
-
-
+    if (!googleUser) { return; }
     Usuario.findOne({ email: googleUser.email }, (err, usuarioDB) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
                 err
             });
-        };
+        }
         if (usuarioDB) {
             if (usuarioDB.google === false) {
                 return res.status(400).json({

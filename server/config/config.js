@@ -15,7 +15,8 @@ process.env.URLDB = urlDB;
 // ============
 // 60 seg * 60 min * 24 hrs * 30 dias 
 
-process.env.TOKEN_EXPIRES = 60 * 60 * 24 * 30;
+// process.env.TOKEN_EXPIRES = 60 * 60 * 24 * 30;
+process.env.TOKEN_EXPIRES = '48h';
 
 process.env.SEED = process.env.SEED || 'este-es-el-seed-dev';
 
